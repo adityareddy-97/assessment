@@ -1,0 +1,69 @@
+<h1>Hi {{currentUser?.firstName}}!</h1>
+<p>You're logged in with Angular 8!!</p>
+<h3>All login audit :</h3>
+<!-- <ul>
+    <li *ngFor="let audit of audits">
+        <br/><span class="badge badge-primary">{{audit.user}}</span>
+        <br/><span class="badge badge-secondary">{{audit._id}}</span>
+        <br/>Login - {{audit.loginTime}}
+        <br/>Logout - {{audit.logoutTime}}
+        <br/>IP - {{audit.ip}}
+    </li>
+
+</ul> -->
+<div class="example-container">
+
+  <div class="container">
+    <div class="row justify-content-between">
+
+      <mat-form-field class="col-4">
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+      </mat-form-field>
+
+      <mat-form-field class="col-4">
+        <mat-label>Select time format</mat-label>
+        <mat-select (selectionChange)="onFormatChange($event)">
+          <mat-option [value]="12">12 hr format</mat-option>
+          <mat-option [value]="24">24 hr format</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div *ngIf="formattedDate" class="col-4" style="font-size: 0.85em;">
+        {{formattedDate}}
+      </div>
+    </div>
+
+  </div>
+
+  <mat-table [dataSource]="dataSource" matSort>
+
+    <ng-container matColumnDef="ip">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> IP </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.ip}}% </mat-cell>
+    </ng-container>
+
+    <!-- Login Time Column -->
+    <ng-container matColumnDef="loginTime">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Login Time </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.loginTime}} </mat-cell>
+    </ng-container>
+
+    <!-- Logout Time Column -->
+    <ng-container matColumnDef="logoutTime">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Logout Time </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.logoutTime}} </mat-cell>
+    </ng-container>
+
+    <!-- User Column -->
+    <ng-container matColumnDef="user">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> User </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.user}} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;">
+    </mat-row>
+  </mat-table>
+  <mat-paginator [length]="5" [pageSize]="3" [pageSizeOptions]="[5, 10, 25]">
+  </mat-paginator>
+</div>
